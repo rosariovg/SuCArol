@@ -1,17 +1,5 @@
-/*
-Press 3 sec
-Ask PIN to arm
-Armed
-
-
-Press tap tap taa-5 sec-aaap
-Record new PIN
-End with 5 sec press
-
-...
-
-ALARM
-Immediately wait for PIN to disarm
+/*  SuCArol v1.0
+ *  Super Compact Alarm ... (?)
  */
 
 /* ----------------- Pinout ------------------ */
@@ -158,7 +146,7 @@ unsigned long unpressedButton() {
   return t1-t0;
 }
 
-unsigned long heldButton() {
+unsigned long heldButton(unsigned long ) {
   unsigned long t0 = 0, t1 = 0;
   t0 = millis();
   while (buttonState()) {
