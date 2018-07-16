@@ -160,10 +160,6 @@ void AlarmHandler::saveSequence() {
   }
 }
 
-
-
-
-
 bool AlarmHandler::checkArmRequest(){
 	waitButtonPress();
 	unsigned long duration = heldButton();
