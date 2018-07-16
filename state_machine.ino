@@ -12,6 +12,7 @@ void StateMachine::spin(){
 	else {
 		armedRoutine();
 	}
+	alarm_handler_->blinkPattern();
 }
 
 void StateMachine::disarmedRoutine(){

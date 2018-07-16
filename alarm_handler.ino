@@ -1,6 +1,16 @@
 #include "include/alarm_handler.h"
 
-AlarmHandler::AlarmHandler(){};
+AlarmHandler::AlarmHandler(Blinker* blinker, int sensor_pin, int button_pin, int led_pin, int alarm_pin){
+	sensorPin= sensor_pin;
+	buttonPin = button_pin;
+	ledPin = led_pin;
+	alarmPin = alarm_pin;
+	blinker_ = blinker;
+};
+
+void AlarmHandler::blinkPattern(){
+	blinker_->updateBlinker();
+}
 
 void AlarmHandler::giveAlarm() {
   Serial.print("ALARM!\n");
@@ -16,13 +26,15 @@ void AlarmHandler::shutupAlarm() {
 bool AlarmHandler::listenToSequence() {
   clearSequence();
   Serial.print("Ready to listen to a sequence.\n");
-
+  char* foo = {".=.="};
+  blinker_->reinitializeBlinker(foo);
   if (!waitButtonPressFor(5000)){
     Serial.print("Listening timeout.\n");
     return false;
   }
   //t0 = millis();
   int i;
+
   for(i=0; i<N_SEQ; i+=2) {
     unsigned long pressed = heldButton();
     if (pressed >= 3000) {
@@ -50,13 +62,14 @@ unsigned long AlarmHandler::heldButton() {
   unsigned long t0 = 0, t1 = 0;
   t0 = millis();
   while (buttonState()) {
-    buttoncounter ++;
-    Serial.print("Button pressed: ");
-    Serial.print(buttoncounter);
-    Serial.println();
+    //buttoncounter ++;
+    //Serial.print("Button pressed: ");
+    //Serial.print(buttoncounter);
+    //Serial.println();
+    blinkPattern();
   }
-  buttoncounter = 0;
-  t1 = millis();
+  //buttoncounter = 0;
+  //t1 = millis();
   Serial.print("Button pressed for ");
   Serial.print(t1-t0);
   Serial.print("ms\n");
@@ -87,6 +100,7 @@ unsigned long AlarmHandler::unpressedButton() {
   t0 = millis();
   while (!buttonState()){
     /*Idle*/
+    blinkPattern();
   }
   t1 = millis();
   Serial.print("Button unpressed for ");

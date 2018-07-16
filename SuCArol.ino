@@ -3,8 +3,9 @@
  */
 #include "include/sucarol.h"
 
-/* ------------------------------------------- */
-AlarmHandler alarm_handler;
+char temp[] = {"="};
+Blinker blinker(temp, ledPin);
+AlarmHandler alarm_handler(&blinker, sensorPin, buttonPin, ledPin, alarmPin);
 StateMachine state_machine(&alarm_handler);
 
 void setup() {

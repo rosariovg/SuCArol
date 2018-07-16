@@ -37,8 +37,18 @@ void Blinker::updateBlinker(){
 	}
 };
 
+void Blinker::reinitializeBlinker(char* sequence, unsigned long time_short_ms, unsigned long time_long_ms){
+	digitalWrite(pin_led_, LOW);
+	is_led_on_ = false;
+	sequence_ = sequence;
+	sequence_position_ = 0;
+	time_short_ms_ = time_short_ms;
+	time_long_ms_ = time_long_ms;
+	parseSequence();
+	t_last_switch_ = millis();
+}
 
-Blinker::Blinker(char* sequence, int pin_led, unsigned long time_short_ms = 200, unsigned long time_long_ms = 600){
+Blinker::Blinker(char* sequence, int pin_led, unsigned long time_short_ms , unsigned long time_long_ms){
 	pin_led_ = pin_led;
 	digitalWrite(pin_led_, LOW);
 	is_led_on_ = false;
